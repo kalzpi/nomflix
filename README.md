@@ -1,5 +1,6 @@
 # Nomflix
 
+
 ## Screens
 
 - [ ] Home
@@ -9,8 +10,9 @@
 
 ## Things that I learned.
 
-- Switch, Redirect, exact, render inside of Router
-1. We can use render inside of Router like below.
+**1. Switch, Redirect, exact, render inside of Router**
+
+1.1. We can use render inside of Router like below.
 ~~~
 <Router>
     <Route path="/tv/popular" exact render={()=><h1>Popular</h1>}></Route>    
@@ -19,7 +21,7 @@
 
 When users go to url /tv/popular, we can directly render ```<h1>Popular</h1>``` in the Route like this.
 
-2. exact
+1.2. exact
 
 In below code, when user go to /tv/popular, he will see the component {TV} and ```<h1>Popular</h1>``` at the same time. Because Router seeks every Route that matchs with urlpattern.
 So if we don't want my app acts like that, we need to put 'exact' inside of Route like path="/".
@@ -33,7 +35,7 @@ But in the same time, we can intentionally use that concept. If we want some sma
 </Router>
 ~~~
 
-3. Redirect and Switch
+1.3. Redirect and Switch
 In the code on the above section 2, user will see empty page when they try some weird url on browser. To avoid that, you can use Redirect like below.
 
 ~~~
@@ -61,3 +63,11 @@ To solve this, we need to put ```<Switch></Switch>``` on the outside of Routes a
 ~~~
 
 In this case, you have to put 'exact' in the /tv Route because Router will show you only one page, /tv because of ```<Switch></Switch>```.
+
+**2. Styled component**  
+2.1. Three concepts that applies css in react app.
+- Using one styles.css file in src/
+- Using modules.css
+- Using styled component
+
+
