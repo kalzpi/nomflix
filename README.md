@@ -43,14 +43,14 @@ In the code on the above section 2, user will see empty page when they try some 
 But the problem is, user will not see any of other pages because Router matches "*" in any urlpatterns. So basically user can only see "/" every time.
 To solve this, we need to put <Switch></Switch> on the outside of Routes and then Router will route only one path in a time.
 
-<Router>
-    <Switch>
-        <Route path="/" exact component={Home}></Route>
-        <Route path="/tv" exact component={TV}></Route>
-        <Route path="/tv/popular" exact render={()=><h1>Popular</h1>}></Route>
-        <Route path="/search" exact component={Search}></Route>
-        <Redirect from="*" to="/" />
-    </Switch>
-</Router>
+    <Router>
+        <Switch>
+            <Route path="/" exact component={Home}></Route>
+            <Route path="/tv" exact component={TV}></Route>
+            <Route path="/tv/popular" exact render={()=><h1>Popular</h1>}></Route>
+            <Route path="/search" exact component={Search}></Route>
+            <Redirect from="*" to="/" />
+        </Switch>
+    </Router>
 
 In this case, you have to put 'exact' in the /tv Route because Router will show you only one page, /tv because of <Switch></Switch>.
