@@ -1,68 +1,56 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Nomflix
 
-## Available Scripts
+## Screens
 
-In the project directory, you can run:
+- [ ] Home
+- [ ] TV Shows
+- [ ] Search
+- [ ] Detail
 
-### `npm start`
+## Things that I learned.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Switch, Redirect, exact, render inside of Router
+1. We can use render inside of Router like below.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+<Router>
+    <Route path="/tv/popular" exact render={()=><h1>Popular</h1>}></Route>    
+</Router>
 
-### `npm test`
+When users go to url /tv/popular, we can directly render <h1>Popular</h1> in the Route like this.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. exact
 
-### `npm run build`
+In below code, when user go to /tv/popular, he will see the component {TV} and <h1>Popular</h1> at the same time. Because Router seeks every Route that matchs with urlpattern.
+So if we don't want my app acts like that, we need to put 'exact' inside of Route like path="/".
+But in the same time, we can intentionally use that concept. If we want some small tab which contains dynamic contents inside, we can use this.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<Router>
+    <Route path="/" exact component={Home}></Route>
+    <Route path="/tv" component={TV}></Route>
+    <Route path="/tv/popular" render={()=><h1>Popular</h1>}></Route>
+</Router>
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+3. Redirect and Switch
+In the code on the above section 2, user will see empty page when they try some weird url on browser. To avoid that, you can use Redirect like below.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<Router>
+    <Route path="/" exact component={Home}></Route>
+    <Route path="/tv" component={TV}></Route>
+    <Route path="/tv/popular" render={()=><h1>Popular</h1>}></Route>
+    <Redirect from="*" to="/" />
+</Router>
 
-### `npm run eject`
+But the problem is, user will not see any of other pages because Router matches "*" in any urlpatterns. So basically user can only see "/" every time.
+To solve this, we need to put <Switch></Switch> on the outside of Routes and then Router will route only one path in a time.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<Router>
+    <Switch>
+        <Route path="/" exact component={Home}></Route>
+        <Route path="/tv" exact component={TV}></Route>
+        <Route path="/tv/popular" exact render={()=><h1>Popular</h1>}></Route>
+        <Route path="/search" exact component={Search}></Route>
+        <Redirect from="*" to="/" />
+    </Switch>
+</Router>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+In this case, you have to put 'exact' in the /tv Route because Router will show you only one page, /tv because of <Switch></Switch>.
