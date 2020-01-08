@@ -8,6 +8,38 @@ const api = axios.create({
   }
 });
 
-api.get("movie/popular");
+export const TVApi = {
+  topRated: () => api.get("tv/top_rated"),
+  popular: () => api.get("tv/popular"),
+  airingToday: () => api.get("tv/airing_today"),
+  detail: id =>
+    api.get(`tv/${id}`, {
+      params: {
+        append_to_response: "videos"
+      }
+    }),
+  search: term =>
+    api.get("search/tv", {
+      params: {
+        query: encodeURIComponent(term) //The reason why I didn't just put `query: term` is to encode the term. Because the term can have space, non-english string and everything.
+      }
+    })
+};
 
-export default api;
+export const moviesApi = {
+  nowPlaying: () => api.get("movie/now_playing"),
+  upcoming: () => api.get("movie/upcoming"),
+  popular: () => api.get("movie/popular"),
+  detail: id =>
+    api.get(`movie/${id}`, {
+      params: {
+        append_to_response: "videos"
+      }
+    }),
+  search: term =>
+    api.get("search/movie", {
+      params: {
+        query: encodeURIComponent(term) //The reason why I didn't just put `query: term` is to encode the term. Because the term can have space, non-english string and everything.
+      }
+    })
+};
